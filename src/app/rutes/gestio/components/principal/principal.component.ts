@@ -11,20 +11,16 @@ export class PrincipalComponent  implements OnInit {
   public videos: any[] = [];
 
   ngOnInit() {
+  }
+
+  conexio(){
     this.socket = io('http://localhost:3080' , { transports : ['websocket']});
 
     this.socket.on('listaVideos', (videos: any[]) => {
-      console.log(videos)
       this.videos = videos.map((video, index) => {
         const key = Object.keys(video)[0];
         return { key, value: video[key] };
       });
     });
-    console.log(this.videos)
-  }
-
-  async conexio(){
-
-
   }
 }
