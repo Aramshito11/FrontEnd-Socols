@@ -1,1 +1,4 @@
-<p>principal works!</p>
+<button (click)="conexio()">Llistat de videos</button>
+<ul>
+  <li *ngFor="let video of videos"><button>{{ video.value }}</button></li>
+</ul>
