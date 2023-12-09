@@ -6,6 +6,7 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {HeaderComponent} from './core/header/header.component';
 import {PrincipalComponent} from "./rutes/gestio/components/principal/principal.component";
 import {PrincipalGestioComponent} from "./rutes/gestio/containers/principal-gestio/principal-gestio.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {PrincipalGestioComponent} from "./rutes/gestio/containers/principal-gest
   ],
   imports: [
     BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

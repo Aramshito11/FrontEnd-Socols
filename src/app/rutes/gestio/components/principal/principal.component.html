@@ -1,4 +1,8 @@
 <button (click)="conexio()">Llistat de videos</button>
 <ul>
-  <li *ngFor="let video of videos"><button>{{ video.value }}</button></li>
+  <li *ngFor="let video of videos"><button (click)="generarCodi()">{{ video.value }}</button></li>
 </ul>
+
+<video width="640" height="360" controls>
+  <source src="C://Users//arnau_sq0x0sm//Desktop//DAM//2DAM//M09//ServidorProjecte//NodeServidorBack//Videos//cara al sol remix.mp4" type="video/mp4">
+</video>
