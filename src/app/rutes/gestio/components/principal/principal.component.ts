@@ -29,7 +29,7 @@ export class PrincipalComponent  implements OnInit {
         return {key, value: video[key]};
       });
     });
-  }
+  } 
 
   generarCodi() {
     this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
