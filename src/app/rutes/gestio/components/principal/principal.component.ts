@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { io } from 'socket.io-client';
 import {HttpClient} from "@angular/common/http";
 
@@ -9,6 +9,13 @@ import {HttpClient} from "@angular/common/http";
 })
 export class PrincipalComponent  implements OnInit {
   private socket: any;
+  serverResponse: any;
+  showvideo: any;
+  videoUrl: any;
+
+  @ViewChild('videoContainer') videoContainer: ElementRef | any;
+
+
   public videos: any[] = [];
   private serverData: string | undefined;
 
@@ -18,6 +25,7 @@ export class PrincipalComponent  implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   conexio() {
@@ -29,9 +37,9 @@ export class PrincipalComponent  implements OnInit {
         return {key, value: video[key]};
       });
     });
-  } 
+  }
 
-  generarCodi() {
+  generarCodi(nomVideo: any) {
     this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
 
     this.socket.on('codeFromServer', (data: any) => {
@@ -39,9 +47,46 @@ export class PrincipalComponent  implements OnInit {
       this.serverData = data.code;
     });
 
+    this.socket.emit('videoEscollit', {video: nomVideo})
+
     setTimeout(()=> {
       alert('Código recibido del servidor: ' + this.serverData);
     }, 1000)
 
+  }
+
+  video(){
+    this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
+    this.socket.on('serverResponse', (response: any) => {
+      if (response.status === 'correcte') {
+        this.serverResponse = response;
+        this.playVideo();
+        console.log("reproducion")
+      } else {
+        console.error('Error en el servidor.');
+      }
+    });
+  }
+
+  playVideo() {
+    const videoBlob = new Blob([this.serverResponse.video], { type: 'video/mp4' });
+    this.videoUrl = URL.createObjectURL(videoBlob);
+    this.showvideo = true;
+
+    const video = document.createElement('video');
+    video.width = 640;
+    video.height = 360;
+    video.controls = true;
+
+    const source = document.createElement('source');
+    source.src = this.videoUrl;
+    source.type = 'video/mp4';
+
+    video.appendChild(source);
+
+    this.videoContainer.nativeElement.innerHTML = '';
+    this.videoContainer.nativeElement.appendChild(video);
+
+    video.play();
   }
 }
