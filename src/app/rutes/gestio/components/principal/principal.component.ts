@@ -29,7 +29,7 @@ export class PrincipalComponent  implements OnInit {
   }
 
   conexio() {
-    this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
+    this.socket = io('http://192.168.176.1:7777', {transports: ['websocket']});
 
     this.socket.on('listaVideos', (videos: any[]) => {
       this.videos = videos.map((video, index) => {
@@ -40,7 +40,7 @@ export class PrincipalComponent  implements OnInit {
   }
 
   generarCodi(nomVideo: any) {
-    this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
+    this.socket = io('http://192.168.176.1:7777', {transports: ['websocket']});
 
     this.socket.on('codeFromServer', (data: any) => {
       console.log('Código del servidor:', data.code);
@@ -56,7 +56,7 @@ export class PrincipalComponent  implements OnInit {
   }
 
   video(){
-    this.socket = io('http://192.168.1.134:7777', {transports: ['websocket']});
+    this.socket = io('http://192.168.176.1:7777', {transports: ['websocket']});
     this.socket.on('serverResponse', (response: any) => {
       if (response.status === 'correcte') {
         this.serverResponse = response;
